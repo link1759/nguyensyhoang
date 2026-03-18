@@ -1,155 +1,248 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tra cứu điểm thi</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Cá Nhân</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --main-bg-color: #f0f0f0;
+      --text-color: #1a1a1a;
+      --card-bg-color: #fff;
+      --divider-color: #ccc;
+      --highlight-color: #000;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: #f1f1f1;
-      margin: 0;
-      padding: 20px;
+      background-color: var(--main-bg-color);
+      color: var(--text-color);
+      font-family: 'Montserrat', sans-serif;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+  .menu-toggle::before {
+  content: "🌸"; /* Dùng icon hoa anh đào thay thế */
+  font-size: 25px;
+  line-height: 1;
+  color: var(--text-color);
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: color 0.3s ease;
+}
+
+/* Đảm bảo phần tử gốc .menu-toggle không có nội dung nếu dùng ::before */
+.menu-toggle {
+    /* Xóa nội dung gốc nếu có */
+    font-size: 0; /* Hoặc ẩn text-indent */
+}
+
+.menu-toggle:hover::before {
+    color: var(--highlight-color);
+}
+
+
+    .menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 150px;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding-top: 60px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu.active {
+      transform: translateX(0);
+    }
+
+    .menu a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 10px 20px;
+      transition: background-color 0.2s ease;
+      text-align: left;
+    }
+
+    .menu a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
     .container {
-      max-width: 700px;
-      margin: auto;
-      background: #fff;
-      padding: 30px 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      margin: 0 auto;
+      background-image: url('background.gif');
+      background-size: cover;
+      background-position: center;
+      background-color: var(--card-bg-color);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
     }
 
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 25px;
+    .avatar-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #000, #333, #666);
+      padding: 5px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     }
 
-    .form-group {
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--card-bg-color);
+      transition: transform 0.3s ease;
+    }
+
+    .avatar-wrapper:hover .avatar {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 5px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    }
+
+    .username {
+      font-size: 15px;
+      color: #00f;
+      font-weight: 400;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Đổi tên class 'description' thành 'custom-description' và thêm CSS theo yêu cầu */
+    .custom-description {
+        font-size: 15px; /* Tăng kích thước chữ cho dễ nhìn hơn */
+        line-height: 1.6;
+        color: #fff; /* Màu chữ: Trắng */
+        padding: 0 10px;
+        /* Hiệu ứng viền đen (đổ bóng chữ 1px đen 4 hướng) */
+        text-shadow: 
+            -1px -1px 0 #000,  /* Trên trái */
+             1px -1px 0 #000,  /* Trên phải */
+            -1px  1px 0 #000,  /* Dưới trái */
+             1px  1px 0 #000;  /* Dưới phải */
+        margin-bottom: 20px; /* Thêm khoảng cách dưới */
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      margin: 30px 0;
+      width: 80%;
+      margin: 30px auto;
+    }
+
+    .button-group {
       display: flex;
       flex-direction: column;
-      margin-bottom: 15px;
-    }
-
-    .form-group label {
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .form-group input {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .captcha-box {
-      display: flex;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 15px; 
     }
 
-    .captcha {
-      padding: 10px 20px;
-      font-size: 18px;
-      font-weight: bold;
-      font-family: monospace;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      color: #2d4db6;
-      border-radius: 4px;
+    .contact-button {
+      width: 90%; 
+      max-width: 300px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background-color: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 15px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .scores {
-      margin-top: 30px;
-      font-size: 18px;
-    }
-
-    .scores span {
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    .note {
-      margin-top: 20px;
-      font-style: italic;
-      color: #666;
-    }
-
-    @media (max-width: 600px) {
-      .captcha-box {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      button {
-        font-size: 15px;
-      }
+    .contact-button:hover {
+      transform: translateY(-3px);
+      background-color: rgba(0, 0, 0, 0.7);
+      border-color: #fff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 <body>
+  
+  
+
   <div class="container">
-    <h2>Trang Kiểm Tra Điểm</h2>
-
-    <form>
-      <!-- Mã thí sinh -->
-      <div class="form-group">
-        <label for="studentId">Mã thí sinh</label>
-        <input type="text" id="studentId" name="studentId" placeholder="7105798">
-      </div>
-
-      <!-- Mã xác nhận + Captcha -->
-      <div class="form-group">
-        <label for="captcha">Mã xác nhận</label>
-        <div class="captcha-box">
-          <input type="text" id="captcha" name="captcha" placeholder="7Cm6F">
-          <div class="captcha">7Cm6F</div>
-        </div>
-      </div>
-
-      <button type="submit">Tra cứu</button>
-    </form>
-
-    <!-- Kết quả -->
-    <div class="scores">
-      <p>Điểm Khảo Sát:
-        <span>C: not</span>
-        <span>C#: not</span>
-        <span>C++: not</span>
-        <span>Java: not</span>
-        <span>Python: 7.25</span>
-        <span>Kotlin: not</span>
-      </p>
+    <div class="avatar-wrapper">
+      <img src="avatar.gif" class="avatar" alt="Avatar">
     </div>
+    
+    <h1>Nguyễn Sỹ Hoàng
+      <img src="tick.png" alt="tick xanh" style="width: 16px; height: 16px; vertical-align: middle; margin-left: 5px;">
+    </h1>
+   
+    <p class="custom-description">syhoang.work@gmail.com</p>
 
-    <!-- Ghi chú -->
-    <div class="note">
-      Ghi chú: Cảm ơn bạn đã tham gia, Điểm được chấm dựa trên dữ liệu của A.I
-    </div>
+    <hr class="divider" />
+    <p class="custom-description">Thông Tin Cá Nhân</p>
+    <div class="button-group">
+      
+       <a href="https://robloxvtuber.com/" target="_blank" class="contact-button">Shop Acc Blox Fruits / Fisch</a>
+       
+       <a href="https://www.facebook.com/syhoang.work" target="_blank" class="contact-button">Facebook Cá Nhân</a>
+      
+        <a href="https://www.facebook.com/groups/3490894170999458" target="_blank" class="contact-button">Group Blox Fruits</a>
+      
+      <a href="https://discord.gg/yDpKPdjdnB" target="_blank" class="contact-button">Discord Nói Chuyện</a>
+    </div><br>
+    <hr class="divider" />
   </div>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menu');
+
+    // Cần phải có các phần tử này trong HTML để script hoạt động, nếu không sẽ báo lỗi
+    // Hiện tại file HTML gốc của bạn bị thiếu 2 phần tử này, nhưng tôi giữ lại script
+    // Nếu bạn muốn script hoạt động, hãy thêm:
+    // <div class="menu-toggle" id="menuToggle"></div>
+    // <div class="menu" id="menu">
+    //   // </div>
+
+    if (menuToggle && menu) {
+        menuToggle.addEventListener('click', function() {
+            menu.classList.toggle('active');
+        });
+    }
+  </script>
 </body>
 </html>
